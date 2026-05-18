@@ -2,7 +2,11 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <div className='text-5xl'>Home</div>
+    <div>
+      <div>
+        <input type="text" placeholder='Search'className='p-2 bg-gray-200 m-5 rounded-lg w-fit h-12' />
+      </div>
+    </div>
   )
 }
 

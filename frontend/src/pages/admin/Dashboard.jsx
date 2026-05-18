@@ -8,7 +8,13 @@ const Dashboard = () => {
     const [users, setUsers] = useState([]);
     const [orders, setOrders] = useState([]);
 
-
+    const totalRevenue = orders.reduce(
+    (total, order) => {
+        return total + (order.price * order.quantity);
+    },
+    0
+);
+   
     const menuItems = [
         {
             name: "Dashboard",
@@ -22,7 +28,7 @@ const Dashboard = () => {
         },
         {
             name: "Products",
-            path: "/admin/products",
+            path: "/admin/product",
             icon: "🛍️",
         },
         {
@@ -291,13 +297,13 @@ const Dashboard = () => {
 
                                 <h2 className="text-3xl font-bold mt-2">
                                     {/* ₹50K */}
-                            
+                                ₹ {totalRevenue.toLocaleString()}
                                 </h2>
 
                             </div>
 
                             <div className="text-5xl">
-                                💰
+                                💰  
                             </div>
 
                         </div>
