@@ -21,7 +21,7 @@ const Products = () => {
 
             toast.error("Failed To Fetch Products");
         }
-    };  
+    };
 
     useEffect(() => {
         fetchProducts();
@@ -45,7 +45,7 @@ const Products = () => {
 
                         <div key={ele._id}>
 
-                            <div className="bg-white p-5 rounded-2xl shadow-lg hover:shadow-2xl duration-300">
+                            <div className="bg-white p-5 rounded-2xl shadow-lg hover:shadow-2xl duration-300 h-full flex flex-col">
 
                                 <img
                                     src={ele.image}
@@ -53,7 +53,7 @@ const Products = () => {
                                     className="w-full h-52 object-cover rounded-xl"
                                 />
 
-                                <div className="mt-4">
+                                <div className="mt-4 flex flex-col flex-grow">
 
                                     <h2 className="text-2xl font-bold">
                                         {ele.name}
@@ -71,7 +71,7 @@ const Products = () => {
                                         Category : {ele.category}
                                     </p>
 
-                                    <p className="text-gray-600 mt-3 line-clamp-2">
+                                    <p className="text-gray-600 mt-3 line-clamp-2 flex-grow">
                                         {ele.description}
                                     </p>
 

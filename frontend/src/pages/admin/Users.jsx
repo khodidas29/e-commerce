@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
+import { toast } from 'react-toastify';
 
 const Users = () => {
 
@@ -8,7 +9,7 @@ const Users = () => {
     const fetchUsers = async () => {
 
         try {
-
+            
             const token = localStorage.getItem("token");
 
             const response = await fetch(
@@ -57,18 +58,18 @@ const Users = () => {
 
             if (response.ok) {
 
-                alert(data.message);
+                 toast.error("User Removed");
+                //alert(data.message);
 
                 // remove deleted user from state
                 setUsers(users.filter((user) => user._id !== id));
 
             } else {
 
-                alert(data.message);
+                //alert(data.message);
             }
 
         } catch (error) {
-
             console.log(error);
         }
     };

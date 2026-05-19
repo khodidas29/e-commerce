@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {  BrowserRouter, Route, Routes } from 'react-router';
 import { ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'; 
@@ -19,6 +19,7 @@ import Product from './pages/admin/Product';
 import Users from './pages/admin/Users';
 import Order from './pages/admin/Orders';
 import UpdateProduct from './pages/admin/UpdateProduct';
+import Profile from './pages/user/Profile';
 
 const publicRoutes = [
   {
@@ -44,6 +45,12 @@ const privateRoutes = [
     path :"/cart",
     element: <Cart/>
   },
+
+  {
+    path :"/profile",
+    element: <Profile/>
+  },
+  
   {
     path :"/admin/dashboard",
     element: <Dashboard/>
@@ -91,6 +98,7 @@ const App = () => {
 
           </Route>
         </Routes>
+        
      </BrowserRouter>
     </div>
   )

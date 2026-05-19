@@ -6,7 +6,6 @@ const Login = () => {
     email: "",
     password: ""
   });
-
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -17,37 +16,39 @@ const Login = () => {
   };
 
   // login API
-  const handleLogin = async (e) => {
-    e.preventDefault();
+ const handleLogin = async (e) => {
+  e.preventDefault();
 
-    try {
-      const response = await fetch("http://localhost:8080/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
+  try {
 
-      const data = await response.json();
+    const response = await fetch("http://localhost:8080/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    });
 
-      if (!response.ok) {
-        throw new Error(data.message || "Login failed");
-      }
+    const data = await response.json();
 
-      console.log("Login Success:", data.token);
-      navigate("/");
-
-      // store token (if backend sends it)
-      localStorage.setItem("token", data.token);
-
-      //alert("Login successful ");
-
-    } catch (err) {
-      console.log(err);
-      setError(err.message);
+    if (!response.ok) {
+      throw new Error(data.message || "Login failed");
     }
-  };
+
+    // store token
+    localStorage.setItem("token", data.token);
+
+    // store user name
+    localStorage.setItem("username", data.user.name);
+
+    navigate("/");
+
+  } catch (err) {
+
+    console.log(err);
+    setError(err.message);
+  }
+};
 
   return (
     <div className="flex items-center justify-center min-h-screen  bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-400">

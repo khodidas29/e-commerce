@@ -69,7 +69,7 @@ const Cart = () => {
 
           <div className="flex justify-center items-center h-[60vh]">
             <h2 className="text-2xl text-gray-500">
-              No Products In Cart
+              No Products In Cart !!
             </h2>
           </div>
 
