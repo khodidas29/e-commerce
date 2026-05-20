@@ -34,17 +34,17 @@ const AddProduct = () => {
         });
     };
 
-    // const fetchCategories = async () => {
-    //     const res = await fetch(
-    //         "http://localhost:8080/api/categories"
-    //     );
-    //     const data = await res.json();
-    //     setCategories(data.categories);
-    // };
+    const fetchCategories = async () => {
+        const res = await fetch(
+            "http://localhost:8080/api/categories"
+        );
+        const data = await res.json();
+        setCategories(data.categories);
+    };
 
-    // useEffect(() => {
-    //     fetchCategories();
-    // }, []);
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
     const handleSubmit = async (e) => {
 

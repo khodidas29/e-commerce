@@ -81,8 +81,12 @@ const Products = () => {
                                     ₹ {product.price}
                                 </p>
 
-                                 <p className="text-gray-500 mt-2">
-                                 {product.description}
+                                <p className="text-gray-500 mt-2">
+                                    Category : {pro.category}
+                                </p>
+
+                                <p className="text-gray-500 mt-2">
+                                    {product.description}
                                 </p>
 
                                 <div className="flex gap-3 mt-5">
