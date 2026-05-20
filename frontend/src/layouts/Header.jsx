@@ -39,7 +39,7 @@ const Header = () => {
                         Cart
                     </NavLink>
                 )}
-
+              
             </div>
 
             <div className='flex items-center gap-4'>
@@ -56,7 +56,7 @@ const Header = () => {
                     token && (
                         <button
                             onClick={logout}
-                            className='bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-lg'
+                            className='bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-lg cursor-pointer'
                         >
                             Logout
                         </button>

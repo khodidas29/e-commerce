@@ -9,7 +9,7 @@ const Users = () => {
     const fetchUsers = async () => {
 
         try {
-            
+
             const token = localStorage.getItem("token");
 
             const response = await fetch(
@@ -143,7 +143,7 @@ const Users = () => {
                                                 onClick={() => deleteUser(user._id)}
                                                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                                             >
-                                                Remove
+                                             કાઢી નાખો
                                             </button>
 
                                         </td>

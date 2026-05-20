@@ -19,7 +19,7 @@ import Product from './pages/admin/Product';
 import Users from './pages/admin/Users';
 import Order from './pages/admin/Orders';
 import UpdateProduct from './pages/admin/UpdateProduct';
-import Profile from './pages/user/Profile';
+import Profile from './pages/user/ProfileUpdate';
 
 const publicRoutes = [
   {
@@ -67,6 +67,7 @@ const privateRoutes = [
     path : "/admin/orders",
     element : <Order/>
   },
+ 
   {
     path : "/admin/users",
     element: <Users/>
