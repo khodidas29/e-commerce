@@ -82,7 +82,7 @@ const Products = () => {
                                 </p>
 
                                 <p className="text-gray-500 mt-2">
-                                    Category : {pro.category}
+                                    Category : {product.category}
                                 </p>
 
                                 <p className="text-gray-500 mt-2">

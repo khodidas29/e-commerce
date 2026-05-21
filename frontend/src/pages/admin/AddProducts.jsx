@@ -34,26 +34,49 @@ const AddProduct = () => {
         });
     };
 
+    // const fetchCategories = async () => {
+    //     const res = await fetch(
+    //         "http://localhost:8080/api/categories"
+    //     );
+    //     const data = await res.json();
+    //     console.log(data)
+    //     setCategories(data.categories);
+    // };
+
     const fetchCategories = async () => {
-        const res = await fetch(
-            "http://localhost:8080/api/categories"
-        );
-        const data = await res.json();
-        setCategories(data.categories);
+
+        try {
+
+            const res = await fetch(
+                "http://localhost:8080/api/categories"
+            );
+
+            const data = await res.json();
+
+            console.log("API DATA:", data);
+
+            setCategories(data.categories);
+
+        } catch (error) {
+
+            console.log(error);
+        }
     };
 
     useEffect(() => {
         fetchCategories();
     }, []);
 
-    const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
 
-        e.preventDefault();
+    e.preventDefault();
 
-        await addProduct();
+    console.log(form);
 
-        navigate('/admin/product');
-    };
+    await addProduct();
+
+    navigate('/admin/product');
+};
 
     return (
 
@@ -120,57 +143,29 @@ const AddProduct = () => {
 
                         {/* CATEGORY */}
                         <div>
-
                             <select
                                 name="category"
+                                value={form.category}
                                 onChange={handleInputChange}
-                                className='w-full border rounded-xl p-4 text-base sm:text-lg hover:bg-gray-100 outline-none bg-white'
-                                defaultValue=""
+                                className='w-full border rounded-xl p-4'
                             >
 
-                                <option value="" disabled>
+                                <option value="">
                                     Select Category
                                 </option>
 
-                                <option value="Electronics">
-                                    Electronics
-                                </option>
+                                {
+                                    categories?.map((category) => (
 
-                                <option value="Fashion">
-                                    Fashion
-                                </option>
+                                        <option
+                                            key={category._id}
+                                            value={category.name}
+                                        >
+                                            {category.name}
+                                        </option>
 
-                                <option value="Footwear">
-                                    Footwear
-                                </option>
-
-                                <option value="Beauty">
-                                    Beauty
-                                </option>
-
-                                <option value="Accessories">
-                                    Accessories
-                                </option>
-
-                                <option value="Furniture">
-                                    Furniture
-                                </option>
-
-                                <option value="Groceries">
-                                    Groceries
-                                </option>
-
-                                <option value="Sports">
-                                    Sports
-                                </option>
-
-                                <option value="Books">
-                                    Books
-                                </option>
-
-                                <option value="Toys">
-                                    Toys
-                                </option>
+                                    ))
+                                }
 
                             </select>
 

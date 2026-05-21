@@ -1,20 +1,25 @@
 import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router';
 
-const AdminLayout = ({children}) => {
+const AdminLayout = ({ children }) => {
 
     const location = useLocation();
 
     const menuItems = [
-          {
+        {
             name: "Dashboard",
             path: "/admin/dashboard",
             icon: "📊",
-        },  
+        },
         {
             name: "Add Product",
             path: "/admin/add-product",
             icon: "➕",
+        },
+                {
+            name: "Add Category",
+            path: "/admin/add-category",
+            icon: "📂",
         },
         {
             name: "Products",
@@ -31,6 +36,7 @@ const AdminLayout = ({children}) => {
             path: "/admin/users",
             icon: "👤",
         },
+
     ];
 
     return (
@@ -63,11 +69,10 @@ const AdminLayout = ({children}) => {
                                 to={item.path}
                                 className={`flex items-center gap-4 p-4 rounded-xl transition duration-300
                                 
-                                ${
-                                    location.pathname === item.path
+                                ${location.pathname === item.path
                                         ? "bg-blue-500"
                                         : "hover:bg-gray-800"
-                                }`}
+                                    }`}
                             >
 
                                 <span className="text-2xl">
@@ -86,30 +91,30 @@ const AdminLayout = ({children}) => {
 
             </div>
 
-                    {/* MAIN CONTENT */}
-                    <div className="flex-1 p-8">
+            {/* MAIN CONTENT */}
+            <div className="flex-1 p-8">
 
-                        {/* TOPBAR */}
-                        <div className="bg-white rounded-2xl shadow-md p-5 flex justify-between items-center mb-8">
+                {/* TOPBAR */}
+                <div className="bg-white rounded-2xl shadow-md p-5 flex justify-between items-center mb-8">
 
-                            <div>
+                    <div>
 
-                                <h1 className="text-3xl font-bold text-gray-800">
-                                    Admin Dashboard
-                                </h1>
+                        <h1 className="text-3xl font-bold text-gray-800">
+                            Admin Dashboard
+                        </h1>
 
-                                <p className="text-gray-500 mt-1">
-                                    Welcome back Admin 👋
-                                </p>
+                        <p className="text-gray-500 mt-1">
+                            Welcome back Admin 👋
+                        </p>
 
-                            </div>
-
-                        </div>
-
-                        {/* PAGE CONTENT */}
-                      {children}
                     </div>
-                  
+
+                </div>
+
+                {/* PAGE CONTENT */}
+                {children}
+            </div>
+
         </div>
     );
 };

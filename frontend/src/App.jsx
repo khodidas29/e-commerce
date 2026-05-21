@@ -20,6 +20,8 @@ import Users from './pages/admin/Users';
 import Order from './pages/admin/Orders';
 import UpdateProduct from './pages/admin/UpdateProduct';
 import Profile from './pages/user/ProfileUpdate';
+import AddCategory from './pages/admin/AddCategory';
+import AdminRoutes from './routes/AdminRoutes';
 
 const publicRoutes = [
   {
@@ -75,7 +77,15 @@ const privateRoutes = [
   {
     path :"/admin/update-product/:id",
     element: <UpdateProduct/>
+  },
+  {
+    path:"/admin/add-category",
+    element:<AddCategory/>
+  },
+  {
+    element:<AdminRoutes/>
   }
+  
 ]
 const App = () => {
   return (

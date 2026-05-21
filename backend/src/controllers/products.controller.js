@@ -1,14 +1,35 @@
 import { Products } from "../models/product.model.js"
 
-export const createProduct = async (req,res)=>{ 
+// export const createProduct = async (req,res)=>{ 
+//     try {
+//         const product = new Products(req.body);
+//         const saved = await product.save();
+//         res.status(201).json({message:"Product added",product})
+//     } catch (error) {
+//         res.status(500).json({error: error.message || "Internal server error"})
+//     }
+// }
+
+export const createProduct = async (req, res) => {
+
     try {
-        const product = new Products(req.body);
-        const saved = await product.save();
-        res.status(201).json({message:"Product added",product})
+
+        console.log(req.body);
+
+        const product = await Products.create(req.body);
+
+        res.status(201).json({
+            success: true,
+            product
+        });
+
     } catch (error) {
-        res.status(500).json({error: error.message || "Internal server error"})
+
+        res.status(500).json({
+            error: error.message
+        });
     }
-}
+};
 
 export const getProduct = async(req,res) =>{
     try {

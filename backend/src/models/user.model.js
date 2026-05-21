@@ -7,6 +7,12 @@ const userSchema = new Schema(
         phone : Number,
         password : String,
         confirmPassword : String,
+
+        role :{
+            type : String,
+            default :"USER",
+            enum :["USER","ADMIN"]
+        }
     }
 )
 

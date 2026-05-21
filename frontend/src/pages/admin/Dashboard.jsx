@@ -1,6 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router';
-
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    ResponsiveContainer,
+    PieChart,
+    Pie,
+    Cell,
+    LineChart,
+    Line,
+    CartesianGrid,
+    Legend
+} from "recharts";
 const Dashboard = () => {
 
     const location = useLocation();
@@ -9,12 +23,12 @@ const Dashboard = () => {
     const [orders, setOrders] = useState([]);
 
     const totalRevenue = orders.reduce(
-    (total, order) => {
-        return total + (order.price * order.quantity);
-    },
-    0
-);
-   
+        (total, order) => {
+            return total + (order.price * order.quantity);
+        },
+        0
+    );
+
     const menuItems = [
         {
             name: "Dashboard",
@@ -25,6 +39,11 @@ const Dashboard = () => {
             name: "Add Product",
             path: "/admin/add-product",
             icon: "➕",
+        },
+        {
+            name: "Add Category",
+            path: "/admin/add-category",
+            icon: "📂",
         },
         {
             name: "Products",
@@ -41,6 +60,7 @@ const Dashboard = () => {
             path: "/admin/users",
             icon: "👤",
         },
+
     ];
 
     // FETCH PRODUCTS
@@ -87,30 +107,70 @@ const Dashboard = () => {
     // FETCH ORDERS
     const fetchOrders = async () => {
 
-    try {
+        try {
 
-        const response = await fetch(
-            "http://localhost:8080/api/orders"
-        );
+            const response = await fetch(
+                "http://localhost:8080/api/orders"
+            );
 
-        const data = await response.json();
+            const data = await response.json();
 
-        console.log(data);
+            console.log(data);
 
-        setOrders(data.orders);
+            setOrders(data.orders);
 
-    } catch (error) {
+        } catch (error) {
 
-        console.log(error);
-    }
-};
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
         fetchProducts();
         fetchUsers();
         fetchOrders();
     }, []);
-    
+
+
+    const categoryData = Object.values(
+
+        products.reduce((acc, product) => {
+
+            const category = product.category || "Other";
+
+            if (!acc[category]) {
+
+                acc[category] = {
+                    name: category,
+                    value: 0
+                };
+            }
+
+            acc[category].value += 1;
+
+            return acc;
+
+        }, {})
+    );
+
+    const revenueData = orders.map((order, index) => ({
+        name: `Order ${index + 1}`,
+        revenue: order.price * order.quantity
+    }));
+
+    const stockData = products.map((product) => ({
+        name: product.name,
+        stock: product.stock
+    }));
+
+    const COLORS = [
+        "#0088FE",
+        "#00C49F",
+        "#FFBB28",
+        "#FF8042",
+        "#A855F7",
+        "#EC4899"
+    ];
     return (
 
         <div className="flex min-h-screen bg-gray-100">
@@ -245,7 +305,7 @@ const Dashboard = () => {
 
                                 <h2 className="text-3xl font-bold mt-2">
                                     {/* 85 */}
-                                    {orders.length} 
+                                    {orders.length}
                                 </h2>
 
                             </div>
@@ -297,13 +357,13 @@ const Dashboard = () => {
 
                                 <h2 className="text-3xl font-bold mt-2">
                                     {/* ₹50K */}
-                                ₹ {totalRevenue.toLocaleString()}
+                                    ₹ {totalRevenue.toLocaleString()}
                                 </h2>
 
                             </div>
 
                             <div className="text-5xl">
-                                💰  
+                                💰
                             </div>
 
                         </div>
@@ -311,7 +371,117 @@ const Dashboard = () => {
                     </div>
 
                 </div>
+                {/* GRAPHS */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
 
+                    {/* BAR CHART */}
+                    <div className="bg-white p-6 rounded-2xl shadow-md">
+
+                        <h2 className="text-2xl font-bold mb-6">
+                            Product Stock
+                        </h2>
+
+                        <ResponsiveContainer width="100%" height={300}>
+
+                            <BarChart data={stockData}>
+
+                                <CartesianGrid strokeDasharray="3 3" />
+
+                                <XAxis dataKey="name" />
+
+                                <YAxis />
+
+                                <Tooltip />
+
+                                <Legend />
+
+                                <Bar
+                                    dataKey="stock"
+                                    fill="#3B82F6"
+                                    radius={[10, 10, 0, 0]}
+                                />
+
+                            </BarChart>
+
+                        </ResponsiveContainer>
+
+                    </div>
+
+                    {/* PIE CHART */}
+                    <div className="bg-white p-6 rounded-2xl shadow-md">
+
+                        <h2 className="text-2xl font-bold mb-6">
+                            Products By Category
+                        </h2>
+
+                        <ResponsiveContainer width="100%" height={300}>
+
+                            <PieChart>
+
+                                <Pie
+                                    data={categoryData}
+                                    dataKey="value"
+                                    nameKey="name"
+                                    outerRadius={100}
+                                    label
+                                >
+
+                                    {
+                                        categoryData.map((entry, index) => (
+
+                                            <Cell
+                                                key={index}
+                                                fill={COLORS[index % COLORS.length]}
+                                            />
+
+                                        ))
+                                    }
+
+                                </Pie>
+
+                                <Tooltip />
+
+                            </PieChart>
+
+                        </ResponsiveContainer>
+
+                    </div>
+
+                </div>
+
+                {/* LINE CHART */}
+                <div className="bg-white p-6 rounded-2xl shadow-md mb-10">
+
+                    <h2 className="text-2xl font-bold mb-6">
+                        Revenue Overview
+                    </h2>
+
+                    <ResponsiveContainer width="100%" height={350}>
+
+                        <LineChart data={revenueData}>
+
+                            <CartesianGrid strokeDasharray="3 3" />
+
+                            <XAxis dataKey="name" />
+
+                            <YAxis />
+
+                            <Tooltip />
+
+                            <Legend />
+
+                            <Line
+                                type="monotone"
+                                dataKey="revenue"
+                                stroke="#10B981"
+                                strokeWidth={3}
+                            />
+
+                        </LineChart>
+
+                    </ResponsiveContainer>
+
+                </div>
                 <Outlet />
 
             </div>
