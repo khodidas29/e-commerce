@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 const Login = () => {
 
   const [formData, setFormData] = useState({
@@ -16,42 +17,48 @@ const Login = () => {
   };
 
   // login API
- const handleLogin = async (e) => {
-  e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  try {
+    try {
 
-    const response = await fetch("http://localhost:8080/api/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    });
+      const response = await fetch("http://localhost:8080/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.message || "Login failed");
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      // store token
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.user.role);
+
+      // store user name
+      localStorage.setItem("username", data.user.name);
+
+      navigate("/");
+      toast.success("Login successfull")
+      if (data.user.role === "ADMIN") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+
+      console.log(err);
+      setError(err.message);
     }
-
-    // store token
-    localStorage.setItem("token", data.token);
-
-    // store user name
-    localStorage.setItem("username", data.user.name);
-
-    navigate("/");
-
-  } catch (err) {
-
-    console.log(err);
-    setError(err.message);
-  }
-};
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen  bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-400">
+    <div className="flex items-center justify-center min-h-screen  bg-gradient-to-br from-indigo-100 via-purple-200 to-pink-100">
 
       <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg">
 

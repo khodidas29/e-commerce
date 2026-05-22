@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router';
 import {
     BarChart,
     Bar,
@@ -21,6 +21,7 @@ const Dashboard = () => {
     const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [orders, setOrders] = useState([]);
+    const navigate = useNavigate();
 
     const totalRevenue = orders.reduce(
         (total, order) => {
@@ -28,6 +29,15 @@ const Dashboard = () => {
         },
         0
     );
+
+    const logout = () => {
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("role");
+
+    navigate("/login");
+};
 
     const menuItems = [
         {
@@ -251,8 +261,16 @@ const Dashboard = () => {
                             Welcome back શેઠ 👋
                         </p>
 
+
+
                     </div>
-                    {/* 
+
+                    <button
+                        onClick={logout}
+                        className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl"
+                    >
+                        Logout
+                    </button>                    {/* 
                     <div className="flex items-center gap-4">
 
                         <div className="bg-gray-200 w-12 h-12 rounded-full flex items-center justify-center text-xl">

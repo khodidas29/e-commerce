@@ -9,6 +9,7 @@ import Login from './pages/user/Login';
 
 import PublicRoute from './routes/PublicRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
+import AdminRoutes from './routes/AdminRoutes';
 
 import MainLayout from './layouts/MainLayout';
 import Products from './pages/user/Products';
@@ -21,7 +22,7 @@ import Order from './pages/admin/Orders';
 import UpdateProduct from './pages/admin/UpdateProduct';
 import Profile from './pages/user/ProfileUpdate';
 import AddCategory from './pages/admin/AddCategory';
-import AdminRoutes from './routes/AdminRoutes';
+
 
 const publicRoutes = [
   {
@@ -51,9 +52,11 @@ const privateRoutes = [
   {
     path :"/profile",
     element: <Profile/>
-  },
-  
-  {
+  }
+]
+  const adminRoute =[
+    {
+      
     path :"/admin/dashboard",
     element: <Dashboard/>
   },
@@ -82,11 +85,12 @@ const privateRoutes = [
     path:"/admin/add-category",
     element:<AddCategory/>
   },
-  {
-    element:<AdminRoutes/>
-  }
-  
-]
+  // {
+  //   element:<AdminRoutes/>
+  // }
+    
+  ]
+ 
 const App = () => {
   return (
     <div>
@@ -105,6 +109,12 @@ const App = () => {
               {publicRoutes.map(({ path, element }) => (
                 <Route key={path} path={path} element={element} />
               ))}
+            </Route>
+
+            <Route element={<AdminRoutes/>}>
+            {adminRoute.map(({path,element}) => (
+              <Route key={path} path={path} element={element}/>
+            ))}
             </Route>
 
           </Route>

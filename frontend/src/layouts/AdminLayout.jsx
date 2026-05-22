@@ -1,9 +1,19 @@
 import React from 'react';
-import { Link, Outlet, useLocation } from 'react-router';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router';
 
 const AdminLayout = ({ children }) => {
 
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const logout = () => {
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("role");
+
+        navigate("/login");
+    };
 
     const menuItems = [
         {
@@ -16,7 +26,7 @@ const AdminLayout = ({ children }) => {
             path: "/admin/add-product",
             icon: "➕",
         },
-                {
+        {
             name: "Add Category",
             path: "/admin/add-category",
             icon: "📂",
@@ -38,6 +48,7 @@ const AdminLayout = ({ children }) => {
         },
 
     ];
+
 
     return (
         <div className="flex min-h-screen bg-gray-100">
@@ -108,6 +119,13 @@ const AdminLayout = ({ children }) => {
                         </p>
 
                     </div>
+                    <button
+                        onClick={logout}
+                        className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl"
+                    >
+                        Logout
+                    </button>
+
 
                 </div>
 
