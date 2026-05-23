@@ -35,12 +35,13 @@ const Cart = () => {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            name: item.name,
-            image: item.image,
-            price: item.price,
-            quantity: item.quantity
-          })
+         body: JSON.stringify({
+    productId: item._id,
+    name: item.name,
+    image: item.image,
+    price: item.price,
+    quantity: item.quantity
+})
         }
       );
 

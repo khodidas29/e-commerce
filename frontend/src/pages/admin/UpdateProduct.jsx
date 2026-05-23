@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 const UpdateProduct = () => {
 
-    const { id } = useParams();
+const { id } = useParams();
 
     const navigate = useNavigate();
 

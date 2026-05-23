@@ -82,11 +82,15 @@ const Products = () => {
                                 </p>
 
                                 <p className="text-gray-500 mt-2">
+                                    Stock : {product.stock}
+                                </p>
+
+                                <p className="text-gray-500 mt-2">
                                     Category : {product.category}
                                 </p>
 
                                 <p className="text-gray-500 mt-2">
-                                    {product.description}
+                                  Description : {product.description}
                                 </p>
 
                                 <div className="flex gap-3 mt-5">

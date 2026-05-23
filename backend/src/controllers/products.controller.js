@@ -61,3 +61,24 @@ export const updateProduct = async(req,res) =>{
         res.status(500).json({error:error.message || "Internal server error"})
     }
 }
+
+export const getSingleProduct = async (req, res) => {
+
+    try {
+
+        const productId = req.params.id;
+
+        const product = await Products.findById(productId);
+
+        res.status(200).json({
+            success: true,
+            product
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};

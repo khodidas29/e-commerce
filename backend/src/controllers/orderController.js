@@ -1,18 +1,51 @@
 import { Orders } from "../models/order.model.js"
+import { Products } from "../models/product.model.js";
 
-export const createOrder = async (req, res) => {    
+// export const createOrder = async (req, res) => {    
+//     try {
+//         const order = new Orders(req.body)
+//         const saved = await order.save();
+//         res.status(201).json({
+//             success: true,
+//             message: "Order added",
+//             saved
+//         })
+//     } catch (error) {
+//         res.status(500).json({ error: error.message || "Internal server error" })
+//     }
+// }
+export const createOrder = async (req, res) => {
+
     try {
-        const order = new Orders(req.body)
+
+        console.log(req.body);
+
+        const order = new Orders(req.body);
+
         const saved = await order.save();
+
+        await Products.findByIdAndUpdate(
+            req.body.productId,
+            {
+                $inc: {
+                    stock: -req.body.quantity
+                }
+            }
+        );
+
         res.status(201).json({
             success: true,
             message: "Order added",
             saved
-        })
+        });
+
     } catch (error) {
-        res.status(500).json({ error: error.message || "Internal server error" })
+
+        res.status(500).json({
+            error: error.message
+        });
     }
-}
+};
 
 export const getOrder = async (req, res) => {
     try {
