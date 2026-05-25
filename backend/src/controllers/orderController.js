@@ -49,7 +49,7 @@ export const createOrder = async (req, res) => {
 
 export const getOrder = async (req, res) => {
     try {
-        const orders = await Orders.find();
+        const orders = await Orders.find().sort({ createdAt: -1 });
         console.log(orders);
         res.status(201).json({ message: "Order fetched", orders })
     } catch (error) {

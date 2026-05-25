@@ -20,8 +20,10 @@ import Product from './pages/admin/Product';
 import Users from './pages/admin/Users';
 import Order from './pages/admin/Orders';
 import UpdateProduct from './pages/admin/UpdateProduct';
-import Profile from './pages/user/ProfileUpdate';
+
 import AddCategory from './pages/admin/AddCategory';
+import Profile from './pages/user/Profile';
+import About from './pages/user/About';
 
 
 const publicRoutes = [
@@ -48,10 +50,13 @@ const privateRoutes = [
     path :"/cart",
     element: <Cart/>
   },
-
   {
     path :"/profile",
     element: <Profile/>
+  },
+  {
+    path : "/about",
+    element:<About/>
   }
 ]
   const adminRoute =[

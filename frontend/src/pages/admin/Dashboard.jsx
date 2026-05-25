@@ -45,11 +45,11 @@ const Dashboard = () => {
             path: "/admin/dashboard",
             icon: "📊",
         },
-        {
-            name: "Add Product",
-            path: "/admin/add-product",
-            icon: "➕",
-        },
+        // {
+        //     name: "Add Product",
+        //     path: "/admin/add-product",
+        //     icon: "➕",
+        // },
         {
             name: "Add Category",
             path: "/admin/add-category",
@@ -186,7 +186,7 @@ const Dashboard = () => {
         <div className="flex min-h-screen bg-gray-100">
 
             {/* SIDEBAR */}
-            <div className="w-72 bg-gray-900 text-white p-6 shadow-2xl">
+            <div className="w-72 fixed top-0 left-0 h-screen bg-gray-900 text-white p-6 shadow-2xl overflow-y-auto">
 
                 {/* Logo */}
                 <div className="mb-10">
@@ -246,7 +246,7 @@ const Dashboard = () => {
             </div>
 
             {/* MAIN CONTENT */}
-            <div className="flex-1 p-8">
+            <div className="flex-1 ml-72 p-8">
 
                 {/* TOPBAR */}
                 <div className="bg-white rounded-2xl shadow-md p-5 flex justify-between items-center mb-8">
@@ -258,7 +258,7 @@ const Dashboard = () => {
                         </h1>
 
                         <p className="text-gray-500 mt-1">
-                            Welcome back શેઠ 👋
+                            Welcome back Admin 👋
                         </p>
 
 

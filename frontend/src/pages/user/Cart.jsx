@@ -8,7 +8,8 @@ const Cart = () => {
     cart,
     removeFromCart,
     increaseQty,
-    decreaseQty
+    decreaseQty,
+    clearCart
   } = useContext(CartContext);
 
   const totalPrice = cart.reduce(
@@ -22,7 +23,9 @@ const Cart = () => {
 
     toast.error("Product Removed");
   };
+  
   const handleBuyNow = async () => {
+    
 
   try {
 
@@ -51,6 +54,7 @@ const Cart = () => {
     }
 
     toast.success("Order Placed Successfully");
+    clearCart();
 
   } catch (error) {
 

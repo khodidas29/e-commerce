@@ -64,6 +64,14 @@ const Header = () => {
                         Products
                     </NavLink>
                 )}
+                {token && (
+                    <NavLink
+                        to="/about"
+                        className='text-white hover:text-gray-200'
+                    >
+                        AboutUs
+                    </NavLink>
+                )}
 
                 {token && (
                     <NavLink
@@ -71,6 +79,14 @@ const Header = () => {
                         className='text-white hover:text-gray-200'
                     >
                         Cart
+                    </NavLink>
+                )}
+                {token && (
+                    <NavLink
+                        to="/profile"
+                        className='text-white hover:text-gray-200'
+                    >
+                        Profile
                     </NavLink>
                 )}
 

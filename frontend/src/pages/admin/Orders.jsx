@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react'
 import AdminLayout from '../../layouts/AdminLayout'
 
 const Orders = () => {
+const [orders, setOrders] = useState([]);
+const fetchOrders = async () => {
 
-  const [orders, setOrders] = useState([]);
+  const res = await fetch(
+    "http://localhost:8080/api/orders"
+  );
 
-  const fetchOrders = async () => {
+  const data = await res.json();
 
-    const res = await fetch(
-      "http://localhost:8080/api/orders"
-    );
+  // latest order first
+  const sortedOrders = data.orders.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
-    const data = await res.json();
-
-    setOrders(data.orders);
-  };
+  setOrders(sortedOrders);
+};
 
   useEffect(() => {
     fetchOrders();

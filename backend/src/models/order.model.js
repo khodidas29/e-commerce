@@ -19,7 +19,11 @@ const orderSchema = new Schema(
             required: true,
             default: 1,
         },
+        
+    },
+    {
+         timestamps: true
     }
 )
 
-export const Orders = new model("orders",orderSchema)
+export const Orders = new model("orders", orderSchema)
