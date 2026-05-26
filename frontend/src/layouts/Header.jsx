@@ -17,9 +17,10 @@ const Header = () => {
 
     const logout = () => {
 
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
-        localStorage.removeItem("role");
+        // localStorage.removeItem("token");
+        // localStorage.removeItem("username");
+        // localStorage.removeItem("role");
+        localStorage.clear()
 
         navigate("/login");
     };
@@ -81,6 +82,16 @@ const Header = () => {
                         Cart
                     </NavLink>
                 )}
+
+                   {token && (
+                    <NavLink
+                        to="/orderhistory"
+                        className='text-white hover:text-gray-200'
+                    >
+                        Orders
+                    </NavLink>
+                )}
+
                 {token && (
                     <NavLink
                         to="/profile"

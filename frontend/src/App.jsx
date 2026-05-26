@@ -24,6 +24,7 @@ import UpdateProduct from './pages/admin/UpdateProduct';
 import AddCategory from './pages/admin/AddCategory';
 import Profile from './pages/user/Profile';
 import About from './pages/user/About';
+import OrderHistory from './pages/user/OrderHistory';
 
 
 const publicRoutes = [
@@ -57,6 +58,10 @@ const privateRoutes = [
   {
     path : "/about",
     element:<About/>
+  },
+  {
+    path:"/orderhistory",
+    element:<OrderHistory/>
   }
 ]
   const adminRoute =[

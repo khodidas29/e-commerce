@@ -248,7 +248,7 @@ const Products = () => {
                 </div>
 
             </div>
-
+                            
         </AdminLayout>
     );
 };

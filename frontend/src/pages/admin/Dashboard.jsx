@@ -35,6 +35,7 @@ const Dashboard = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("role");
+    localStorage.clear()
 
     navigate("/login");
 };

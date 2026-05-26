@@ -51,7 +51,7 @@ export const getOrder = async (req, res) => {
     try {
         const orders = await Orders.find().sort({ createdAt: -1 });
         console.log(orders);
-        res.status(201).json({ message: "Order fetched", orders })
+        res.status(200).json({ message: "Order fetched", orders })
     } catch (error) {
         res.status(500).json({ error: error.message || "Internal server error" })
     }
@@ -61,7 +61,7 @@ export const deleteOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
         await Orders.findByIdAndDelete(orderId)
-        res.status(201).json({ message: "Order deleted" })
+        res.status(200).json({ message: "Order deleted" })
     } catch (error) {
         res.status(500).json({ error: error.message || "Internal server error" })
     }
@@ -71,10 +71,39 @@ export const updateOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
         const data = req.body;
-        await Orders.findByIdAndUpdate(orderId, data)
-        res.status(201).json({ message: "Order updated" })
+        //await Orders.findByIdAndUpdate(orderId, data)
+        await Orders.findByIdAndUpdate(
+            orderId,
+            data,
+            { new: true }
+        )
+        res.status(200).json({ message: "Order updated" })
     } catch (error) {
         res.status(500).json({ error: error.message || "Internal server error" })
 
     }
 }
+
+
+export const getUserOrders = async (req, res) => {
+
+    try {
+
+        const userId = req.params.userId;
+
+        const orders = await Orders.find({
+            userId: userId
+        }).sort({ createdAt: -1 });
+
+        res.status(200).json({
+            success: true,
+            orders
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};

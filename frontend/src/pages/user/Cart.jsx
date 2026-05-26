@@ -23,44 +23,46 @@ const Cart = () => {
 
     toast.error("Product Removed");
   };
-  
+
   const handleBuyNow = async () => {
-    
 
-  try {
 
-    for (const item of cart) {
+    try {
 
-      const res = await fetch(
-        "http://localhost:8080/api/orders/addOrder",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-         body: JSON.stringify({
-    productId: item._id,
-    name: item.name,
-    image: item.image,
-    price: item.price,
-    quantity: item.quantity
-})
-        }
-      );
+      for (const item of cart) {
 
-      const data = await res.json();
+        const res = await fetch(
+          "http://localhost:8080/api/orders/addOrder",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              userId: localStorage.getItem("userId"),
+              username: localStorage.getItem("username"),
+              productId: item._id,
+              name: item.name,
+              image: item.image,
+              price: item.price,
+              quantity: item.quantity
+            })
+          }
+        );
 
-      console.log(data);
+        const data = await res.json();
+
+        console.log(data);
+      }
+
+      toast.success("Order Placed Successfully");
+      clearCart();
+
+    } catch (error) {
+
+      toast.error("Order Failed");
     }
-
-    toast.success("Order Placed Successfully");
-    clearCart();
-
-  } catch (error) {
-
-    toast.error("Order Failed");
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -152,28 +154,28 @@ const Cart = () => {
                 </div>
               ))
             }
-<div className="bg-white shadow-xl rounded-2xl p-6 flex justify-between items-center">
+            <div className="bg-white shadow-xl rounded-2xl p-6 flex justify-between items-center">
 
-  <h2 className="text-3xl font-bold">
-    Total :
-  </h2>
+              <h2 className="text-3xl font-bold">
+                Total :
+              </h2>
 
-  <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
 
-    <p className="text-3xl font-bold text-green-600">
-      ₹{totalPrice}
-    </p>
+                <p className="text-3xl font-bold text-green-600">
+                  ₹{totalPrice}
+                </p>
 
-   <button
-  onClick={handleBuyNow}
-  className="text-white bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg font-semibold"
->
-  Buy Now
-</button>
+                <button
+                  onClick={handleBuyNow}
+                  className="text-white bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg font-semibold"
+                >
+                  Buy Now
+                </button>
 
-  </div>
+              </div>
 
-</div>
+            </div>
 
           </div>
         )

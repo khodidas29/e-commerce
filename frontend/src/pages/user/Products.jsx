@@ -27,12 +27,45 @@ const Products = () => {
         fetchProducts();
     }, []);
 
-    const handleAddToCart = (product) => {
+    const handleAddToCart = async (product) => {
 
+    try {
+
+        // Frontend cart
         addToCart(product);
 
+        // Backend cart save
+        const res = await fetch(
+            "http://localhost:8080/api/cart/add",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: localStorage.getItem("userId"),
+                    productId: product._id,
+                    name: product.name,
+                    image: product.image,
+                    price: product.price,
+                    quantity: 1
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        console.log(data);
+
         toast.success("Product Added To Cart");
-    };
+
+    } catch (error) {
+
+        console.log(error);
+
+        toast.error("Failed To Add Cart");
+    }
+};
 
     return (
 

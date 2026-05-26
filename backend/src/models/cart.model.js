@@ -1,13 +1,14 @@
 import { model, Schema } from "mongoose";
 
-const orderSchema = new Schema(
- {
+const cartSchema = new Schema(
+
+    {
         userId: {
             type: String,
             required: true
         },
 
-        username: {
+        productId: {
             type: String,
             required: true
         },
@@ -19,24 +20,24 @@ const orderSchema = new Schema(
 
         image: {
             type: String,
-            required: true,
+            required: true
         },
 
         price: {
             type: Number,
-            required: true,
+            required: true
         },
 
         quantity: {
             type: Number,
             required: true,
-            default: 1,
-        },
-
+            default: 1
+        }
     },
+
     {
         timestamps: true
     }
-)
+);
 
-export const Orders = new model("orders", orderSchema)
+export const Cart = model("cart", cartSchema);
