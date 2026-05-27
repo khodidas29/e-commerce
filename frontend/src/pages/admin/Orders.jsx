@@ -2,87 +2,160 @@ import React, { useEffect, useState } from 'react'
 import AdminLayout from '../../layouts/AdminLayout'
 
 const Orders = () => {
-const [orders, setOrders] = useState([]);
-const fetchOrders = async () => {
 
-  const res = await fetch(
-    "http://localhost:8080/api/orders"
-  );
+    const [orders, setOrders] = useState([]);
 
-  const data = await res.json();
+    const fetchOrders = async () => {
 
-  // latest order first
-  const sortedOrders = data.orders.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
+        const res = await fetch(
+            "http://localhost:8080/api/orders"
+        );
 
-  setOrders(sortedOrders);
-};
+        const data = await res.json();
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
+        // latest order first
+        const sortedOrders = data.orders.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
 
-  return (
+        setOrders(sortedOrders);
+    };
 
-    <div>
+    useEffect(() => {
+        fetchOrders();
+    }, []);
 
-      <AdminLayout>
+    return (
 
-        <div className="p-8">
+        <AdminLayout>
 
-          <h1 className="text-4xl font-bold mb-8">
-            All Orders
-          </h1>
+            <div className="min-h-screen bg-gray-100 p-8">
 
-          <div className="space-y-6">
+                <div className="flex items-center justify-between mb-10">
 
-            {
-              orders.map((order, index) => (
+                    <h1 className="text-4xl font-bold">
+                        All Orders
+                    </h1>
 
-                <div
-                  key={order._id}
-                  className="bg-white shadow-lg rounded-2xl p-6 flex items-center gap-6"
-                >
+                    <div className="bg-white shadow-md px-6 py-3 rounded-xl">
 
-                  <img
-                    src={order.image}
-                    alt="product"
-                    className="w-28 h-28 object-cover rounded-xl"
-                  />
+                        <p className="text-gray-500">
+                            Total Orders
+                        </p>
 
-                  <div>
+                        <h2 className="text-3xl font-bold text-blue-600">
+                            {orders.length}
+                        </h2>
 
-                    <h2 className="text-2xl font-bold">
-                      {order.name}
-                    </h2>
-
-                    <p className="text-green-600 text-xl mt-2">
-                      ₹{order.price}
-                    </p>
-
-                    <p className="text-gray-600 mt-1">
-                      Quantity : {order.quantity}
-                    </p>
-
-                    <p className="text-gray-400 text-sm mt-2">
-                      Order ID : {order._id}
-                    </p>
-
-                  </div>
+                    </div>
 
                 </div>
-              ))
-            }
 
-          </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        </div>
+                    {
+                        orders.map((order) => (
 
-      </AdminLayout>
+                            <div
+                                key={order._id}
+                                className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300"
+                            >
 
-    </div>
-  )
+                                {/* Top */}
+
+                                <div className="flex gap-5 p-5">
+
+                                    <img
+                                        src={order.image}
+                                        alt="product"
+                                        className="w-32 h-32 object-cover rounded-2xl border"
+                                    />
+
+                                    <div className="flex-1">
+
+                                        <h2 className="text-2xl font-bold">
+                                            {order.name}
+                                        </h2>
+
+                                        <p className="text-green-600 text-2xl font-bold mt-2">
+                                            ₹{order.price}
+                                        </p>
+
+                                        <div className="flex gap-3 mt-3">
+
+                                            <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm">
+                                                Qty : {order.quantity}
+                                            </span>
+
+                                            <span className="bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm">
+                                                Total : ₹{order.price * order.quantity}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                {/* Bottom */}
+
+                                <div className="border-t px-5 py-4 bg-gray-50">
+
+                                    <div className="flex justify-between items-center">
+
+                                        <div>
+
+                                            <p className="text-sm text-gray-500">
+                                                Order ID
+                                            </p>
+
+                                            <p className="text-sm font-semibold break-all">
+                                                {order._id}
+                                            </p>
+
+                                        </div>
+
+                                        <div className="text-right">
+
+                                            <p className="text-sm text-gray-500">
+                                                Ordered On
+                                            </p>
+
+                                            <p className="font-semibold">
+                                                {
+                                                    new Date(order.createdAt).toLocaleDateString()
+                                                }
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div className="mt-4">
+
+                                        <p className="text-sm text-gray-500">
+                                            Delivery Address
+                                        </p>
+
+                                        <p className="font-medium text-gray-700 break-words">
+                                            {order.address}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        ))
+                    }
+
+                </div>
+
+            </div>
+            
+
+        </AdminLayout>
+    )
 }
 
 export default Orders
