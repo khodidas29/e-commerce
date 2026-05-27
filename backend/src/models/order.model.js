@@ -32,6 +32,15 @@ const orderSchema = new Schema(
             required: true,
             default: 1,
         },
+         address: {
+            type: String,
+            required: true
+        },
+
+        totalPrice: {
+            type: Number,
+            required: true
+        }
 
     },
     {

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import React, { useEffect, useState } from 'react';
 
 const Profile = () => {
 
     const [formData, setFormData] = useState({
         name: "",
         email: "",
+        address: "",
         image: null
     });
 
@@ -43,6 +44,7 @@ const Profile = () => {
 
             data.append("name", formData.name);
             data.append("email", formData.email);
+            data.append("address", formData.address);
             data.append("image", formData.image);
 
             const response = await fetch(
@@ -56,13 +58,17 @@ const Profile = () => {
                 }
             );
 
-            const result = await response.json();
+            const text = await response.text();
+            console.log(text);
+
+            const result = JSON.parse(text);
 
             if (!response.ok) {
                 throw new Error(result.message);
             }
 
             localStorage.setItem("username", result.user.name);
+            localStorage.setItem("address", result.user.address);
 
             toast.success("Profile Updated");
 
@@ -72,7 +78,44 @@ const Profile = () => {
             toast.error(error.message);
         }
     };
+    const fetchProfile = async () => {
 
+        try {
+
+            const response = await fetch(
+                "http://localhost:8080/api/users/profile",
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                }
+            );
+
+            const result = await response.json();
+
+            setFormData({
+                name: result.user.name || "",
+                email: result.user.email || "",
+                address: result.user.address || "",
+                image: null
+            });
+
+            if (result.user.image) {
+                setPreview(
+                    `http://localhost:8080/${result.user.image}`
+                );
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+
+    fetchProfile();
+
+}, []);
     return (
 
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -123,6 +166,15 @@ const Profile = () => {
                         placeholder="Enter email"
                         value={formData.email}
                         onChange={handleChange}
+                        className="w-full border p-3 rounded-lg"
+                    />
+
+                    <textarea
+                        name="address"
+                        placeholder="Enter delivery address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        rows="4"
                         className="w-full border p-3 rounded-lg"
                     />
 

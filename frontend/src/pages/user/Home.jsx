@@ -54,7 +54,7 @@ const filteredProducts =
                 <div className="absolute inset-0 flex flex-col justify-center px-16 md:px-32">
 
                     <h1 className="text-white text-5xl md:text-7xl font-bold font-serif mb-6">
-                        Welcome
+                        Welcome !!
                     </h1>
 
                     <p className="text-white text-lg md:text-2xl font-serif leading-relaxed max-w-2xl">

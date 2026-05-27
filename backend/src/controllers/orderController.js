@@ -14,13 +14,51 @@ import { Products } from "../models/product.model.js";
 //         res.status(500).json({ error: error.message || "Internal server error" })
 //     }
 // }
+// export const createOrder = async (req, res) => {
+
+//     try {
+
+//         console.log(req.body);
+
+//         const order = new Orders(req.body);
+
+//         const saved = await order.save();
+
+//         await Products.findByIdAndUpdate(
+//             req.body.productId,
+//             {
+//                 $inc: {
+//                     stock: -req.body.quantity
+//                 }
+//             }
+//         );
+
+//         res.status(201).json({
+//             success: true,
+//             message: "Order added",
+//             saved
+//         });
+
+//     } catch (error) {
+
+//         res.status(500).json({
+//             error: error.message
+//         });
+//     }
+// };
 export const createOrder = async (req, res) => {
 
     try {
 
         console.log(req.body);
 
-        const order = new Orders(req.body);
+        const totalPrice =
+            req.body.price * req.body.quantity;
+
+        const order = new Orders({
+            ...req.body,
+            totalPrice
+        });
 
         const saved = await order.save();
 
@@ -36,6 +74,15 @@ export const createOrder = async (req, res) => {
         res.status(201).json({
             success: true,
             message: "Order added",
+
+            bill: {
+                productName: req.body.name,
+                quantity: req.body.quantity,
+                price: req.body.price,
+                totalPrice: totalPrice,
+                address: req.body.address
+            },
+
             saved
         });
 

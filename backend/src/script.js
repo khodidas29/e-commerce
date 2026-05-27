@@ -19,7 +19,7 @@ const PORT = 8080;
 app.use("/api",route)
 app.use("/api/categories", categoryRoute);
 app.use("/api/cart",cartRoute)
-
+app.use("/uploads", express.static("uploads"));
 
 app.listen(PORT, ()=>{
     console.log(`server is running at http://localhost:${PORT}`)

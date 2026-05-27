@@ -72,3 +72,63 @@ export const deleteUser = async (req,res) =>{
         res.status(500).json({error:error.message || "Internal server error"})
     }
 }
+
+export const updateProfile = async (req, res) => {
+
+    try {
+
+         const userId = req.userId;
+
+        const { name, email, address } = req.body;
+
+        let updateData = {
+            name,
+            email,
+            address
+        };
+
+        // image upload hoy to
+        if (req.file) {
+            updateData.image = req.file.path;
+        }
+
+        const updatedUser = await Users.findByIdAndUpdate(
+            userId,
+            updateData,
+            { new: true }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Profile updated successfully",
+            user: updatedUser
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message || "Internal server error"
+        });
+    }
+};
+
+export const getProfile = async (req, res) => {
+
+    try {
+
+        const user = await Users.findById(req.userId);
+
+        res.status(200).json({
+            success: true,
+            user
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};

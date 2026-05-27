@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { CartContext } from "../../hooks/CartContext";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 const Cart = () => {
 
+  const [bill, setBill] = useState(null); 
   const {
     cart,
     removeFromCart,
@@ -26,43 +28,64 @@ const Cart = () => {
 
   const handleBuyNow = async () => {
 
+  try {
 
-    try {
+    let lastBill = null;
 
-      for (const item of cart) {
+    for (const item of cart) {
 
-        const res = await fetch(
-          "http://localhost:8080/api/orders/addOrder",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              userId: localStorage.getItem("userId"),
-              username: localStorage.getItem("username"),
-              productId: item._id,
-              name: item.name,
-              image: item.image,
-              price: item.price,
-              quantity: item.quantity
-            })
-          }
-        );
+      console.log(localStorage.getItem("address"));
 
-        const data = await res.json();
+      const res = await fetch(
+        "http://localhost:8080/api/orders/addOrder",
+        {
+          method: "POST",
 
-        console.log(data);
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            userId: localStorage.getItem("userId"),
+            username: localStorage.getItem("username"),
+
+            productId: item._id,
+
+            name: item.name,
+            image: item.image,
+
+            price: item.price,
+            quantity: item.quantity,
+
+            address: localStorage.getItem("address")
+          })
+        }
+      );
+
+      const data = await res.json();
+
+      console.log(data);
+
+      if (!res.ok) {
+        throw new Error(data.error);
       }
 
-      toast.success("Order Placed Successfully");
-      clearCart();
-
-    } catch (error) {
-
-      toast.error("Order Failed");
+      lastBill = data.bill;
     }
-  };
+
+    setBill(lastBill);
+
+    toast.success("Order Placed Successfully");
+
+    clearCart();
+
+  } catch (error) {
+
+    console.log(error);
+
+    toast.error(error.message || "Order Failed");
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -180,7 +203,38 @@ const Cart = () => {
           </div>
         )
       }
+{/* {
+  bill && (
 
+    <div className="bg-white shadow-xl rounded-2xl p-6 mt-6">
+
+      <h2 className="text-2xl font-bold mb-4">
+        Order Bill
+      </h2>
+
+      <p>
+        <strong>Product:</strong> {bill.productName}
+      </p>
+
+      <p>
+        <strong>Qty:</strong> {bill.quantity}
+      </p>
+
+      <p>
+        <strong>Price:</strong> ₹{bill.price}
+      </p>
+
+      <p>
+        <strong>Total:</strong> ₹{bill.totalPrice}
+      </p>
+
+      <p>
+        <strong>Address:</strong> {bill.address}
+      </p>
+
+    </div>
+  )
+} */}
     </div>
   )
 }
