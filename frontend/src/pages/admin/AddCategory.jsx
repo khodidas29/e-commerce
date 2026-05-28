@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminLayout from '../../layouts/AdminLayout';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
 const AddCategory = () => {
 
@@ -11,6 +12,7 @@ const AddCategory = () => {
         image: "",
         description: ""
     });
+    const [categories, setCategories] = useState([]);
 
     const handleChange = (e) => {
 
@@ -19,6 +21,31 @@ const AddCategory = () => {
             [e.target.name]: e.target.value
         });
     };
+
+    const fetchCategories = async () => {
+
+        try {
+
+            const res = await fetch(
+                "http://localhost:8080/api/categories"
+            );
+
+            const data = await res.json();
+
+            setCategories(data.categories);
+
+        } catch (error) {
+
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+
+        fetchCategories();
+
+    }, []);
+
 
     const handleSubmit = async (e) => {
 
@@ -38,10 +65,21 @@ const AddCategory = () => {
             );
 
             const data = await res.json();
+            toast.success("Category Added");
 
             console.log(data);
 
-            navigate("/admin/add-product");
+            // refresh category list
+
+            fetchCategories();
+
+            // clear form
+
+            setForm({
+                name: "",
+                image: "",
+                description: ""
+            });
 
         } catch (error) {
 
@@ -96,6 +134,35 @@ const AddCategory = () => {
                     </button>
 
                 </form>
+
+                <div className='mt-10'>
+
+                    <h2 className='text-2xl font-bold mb-5'>
+                        All Categories
+                    </h2>
+
+                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
+
+                        {
+                            categories.map((cat) => (
+
+                                <div
+                                    key={cat._id}
+                                    className='border p-4 rounded-xl shadow-sm bg-gray-50'
+                                >
+
+                                    <h3 className='text-xl font-semibold'>
+                                        {cat.name}
+                                    </h3>
+
+                                </div>
+
+                            ))
+                        }
+
+                    </div>
+
+                </div>
 
             </div>
 

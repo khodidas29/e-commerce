@@ -163,3 +163,25 @@ export const clearCart = async (req, res) => {
         });
     }
 };
+
+export const getCartItems = async (req, res) => {
+
+    try {
+
+        const cartItems = await Cart.find({
+            userId: req.params.userId
+        });
+
+        res.status(200).json({
+            success: true,
+            cartItems
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};

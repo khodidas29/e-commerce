@@ -39,205 +39,156 @@ const OrderHistory = () => {
 
         const doc = new jsPDF();
 
-        // ===== Header =====
-
-        doc.setFillColor(22, 163, 74);
-
-        doc.rect(0, 0, 210, 30, "F");
-
-        doc.setTextColor(255, 255, 255);
-
-        doc.setFontSize(24);
-
-        doc.text("ORDER INVOICE", 20, 20);
-
-        // ===== Reset Text Color =====
-
-        doc.setTextColor(0, 0, 0);
-
-        // ===== Store Info =====
+        doc.setFontSize(18);
+        doc.text("Order Invoice", 20, 20);
 
         doc.setFontSize(12);
 
-        doc.text("My Shopping Store", 20, 45);
+        doc.text(`Product Name: ${order.name}`, 20, 40);
 
-        doc.text("Rajkot, Gujarat", 20, 52);
+        doc.text(`Price: Rs. ${order.price}`, 20, 55);
 
-        // ===== Divider =====
-
-        doc.line(20, 58, 190, 58);
-
-        // ===== Order Details =====
-
-        doc.setFontSize(18);
-
-        doc.text("Order Details", 20, 72);
-
-        doc.setFontSize(14);
-
-        doc.text(`Product Name : ${order.name}`, 20, 90);
-
-        doc.text(`Price : Rs. ${order.price}`, 20, 105);
-
-        doc.text(`Quantity : ${order.quantity}`, 20, 120);
+        doc.text(`Quantity: ${order.quantity}`, 20, 70);
 
         doc.text(
-            `Total Amount : Rs. ${order.price * order.quantity}`,
+            `Total Amount: Rs. ${order.price * order.quantity}`,
             20,
-            135
+            85
         );
 
         doc.text(
-            `Address : ${order.address || "Rajkot, Gujarat"}`,
+            `Address: ${order.address || "Rajkot, Gujarat"}`,
             20,
-            150
+            100
         );
-
-        // ===== Date =====
 
         const today = new Date().toLocaleDateString();
 
-        doc.text(`Date : ${today}`, 20, 165);
+        doc.text(`Date: ${today}`, 20, 115);
 
-        // ===== Total Box =====
-
-        doc.setFillColor(240, 240, 240);
-
-        doc.roundedRect(20, 180, 170, 30, 3, 3, "F");
-
-        doc.setFontSize(18);
-
-        doc.setTextColor(22, 163, 74);
-
-        doc.text(
-            `Grand Total : Rs. ${order.price * order.quantity}`,
-            30,
-            198
-        );
-
-        // ===== Footer =====
-
-        doc.setTextColor(120);
-
-        doc.setFontSize(11);
-
-        doc.text(
-            "Thank you for shopping with us!",
-            60,
-            230
-        );
-
-        // ===== Save PDF =====
+        doc.text("Thank you for shopping!", 20, 140);
 
         doc.save(`${order.name}-invoice.pdf`);
     };
-
     return (
 
-        <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-100 p-4 sm:p-6 md:p-8">
 
-            <h1 className="text-4xl font-bold text-center mb-10">
-                My Orders
-            </h1>
+        {/* TITLE */}
 
-            {
-                orders.length === 0 ? (
+        <h1 className="text-3xl sm:text-4xl font-bold text-center mb-8 md:mb-10">
+            My Orders
+        </h1>
 
-                    <div className="flex justify-center items-center h-[60vh]">
+        {
+            orders.length === 0 ? (
 
-                        <h2 className="text-2xl text-gray-500">
-                            No Orders Found !!
-                        </h2>
+                <div className="flex justify-center items-center h-[60vh]">
 
-                    </div>
+                    <h2 className="text-xl sm:text-2xl text-gray-500 text-center">
+                        No Orders Found !!
+                    </h2>
 
-                ) : (
+                </div>
 
-                    <div className="max-w-6xl mx-auto space-y-6">
+            ) : (
 
-                        {
-                            orders.map((order) => (
+                <div className="max-w-6xl mx-auto space-y-6">
 
-                                <div
-                                    key={order._id}
-                                    className="bg-white rounded-2xl shadow-lg p-6 flex justify-between items-center"
-                                >
+                    {
+                        orders.map((order) => (
 
-                                    {/* LEFT SIDE */}
+                            <div
+                                key={order._id}
+                                className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 flex flex-col lg:flex-row gap-6 lg:justify-between"
+                            >
 
-                                    <div className="flex items-center gap-6">
+                                {/* LEFT SIDE */}
 
-                                        <img
-                                            src={order.image}
-                                            alt="product"
-                                            className="w-32 h-32 object-cover rounded-xl border"
-                                        />
+                                <div className="flex flex-col sm:flex-row gap-5 flex-1">
 
-                                        <div>
+                                    <img
+                                        src={order.image}
+                                        alt="product"
+                                        className="w-full sm:w-40 h-40 object-cover rounded-xl border"
+                                    />
 
-                                            <h2 className="text-2xl font-bold">
-                                                {order.name}
-                                            </h2>
+                                    <div className="flex flex-col justify-center">
 
-                                            <p className="text-green-600 text-xl font-bold mt-2">
-                                                ₹{order.price}
-                                            </p>
-
-                                            <p className="mt-2 text-lg">
-                                                Quantity : {order.quantity}
-                                            </p>
-
-                                        </div>
-
-                                    </div>
-
-                                    {/* RIGHT SIDE BILL */}
-
-                                    <div className="border-l-2 pl-6 min-w-[250px]">
-
-                                        <h2 className="text-2xl font-bold mb-4">
-                                            Bill
+                                        <h2 className="text-2xl font-bold">
+                                            {order.name}
                                         </h2>
 
-                                        <p className="mb-2">
-                                            <strong>Price:</strong> ₹{order.price}
+                                        <p className="text-green-600 text-xl font-bold mt-2">
+                                            ₹{order.price}
                                         </p>
 
-                                        <p className="mb-2">
-                                            <strong>Qty:</strong> {order.quantity}
+                                        <p className="mt-2 text-base sm:text-lg">
+                                            Quantity : {order.quantity}
                                         </p>
 
-                                        <p className="mb-2">
-                                            <strong>Total:</strong> ₹
+                                        <p className="mt-2 text-base sm:text-lg font-semibold text-gray-700">
+                                            Total : ₹
                                             {order.price * order.quantity}
                                         </p>
-
-                                        <p className="mb-4 break-words">
-                                            <strong>Address:</strong>{" "}
-                                            {order.address }
-                                        </p>
-
-                                        {/* DOWNLOAD BUTTON */}
-
-                                        <button
-                                            onClick={() => downloadBill(order)}
-                                            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg transition-all"
-                                        >
-                                            Download PDF
-                                        </button>
 
                                     </div>
 
                                 </div>
-                            ))
-                        }
 
-                    </div>
-                )
-            }
+                                {/* RIGHT SIDE */}
 
-        </div>
-    );
+                                <div className="lg:border-l-2 lg:pl-6 w-full lg:w-70">
+
+                                    <h2 className="text-2xl font-bold mb-4">
+                                        Bill
+                                    </h2>
+
+                                    <div className="space-y-2 text-sm sm:text-base">
+
+                                        <p>
+                                            <strong>Price:</strong> ₹{order.price}
+                                        </p>
+
+                                        <p>
+                                            <strong>Qty:</strong> {order.quantity}
+                                        </p>
+
+                                        <p>
+                                            <strong>Total:</strong> ₹
+                                            {order.price * order.quantity}
+                                        </p>
+
+                                        <p className="wrap-break-word">
+                                            <strong>Address:</strong>{" "}
+                                            {order.address}
+                                        </p>
+
+                                    </div>
+
+                                    {/* BUTTON */}
+
+                                    <button
+                                        onClick={() => downloadBill(order)}
+                                        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl mt-5 font-semibold transition-all"
+                                    >
+                                        Download PDF
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        ))
+                    }
+
+                </div>
+
+            )
+        }
+
+    </div>
+);
 };
 
 export default OrderHistory;

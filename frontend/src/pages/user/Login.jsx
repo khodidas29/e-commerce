@@ -60,65 +60,103 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen  bg-gradient-to-br from-indigo-100 via-purple-200 to-pink-100">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-100 via-purple-200 to-pink-100 px-4">
 
-      <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg">
+    <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-2xl shadow-2xl">
 
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+      {/* Heading */}
 
-        {error && (
-          <p className="text-red-500 text-center mb-3">{error}</p>
-        )}
+      <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
+        Welcome Back
+      </h2>
 
-        <form onSubmit={handleLogin} className="space-y-4">
+      <p className="text-center text-gray-500 mb-6 text-sm sm:text-base">
+        Login to continue shopping
+      </p>
 
-          <div>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
+      {/* Error */}
 
-          <div>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
+      {error && (
+        <p className="text-red-500 text-center mb-4 text-sm">
+          {error}
+        </p>
+      )}
+
+      {/* Form */}
+
+      <form
+        onSubmit={handleLogin}
+        className="space-y-5"
+      >
+
+        {/* Email */}
+
+        <div>
+
+          <label className="block text-gray-700 mb-2 font-medium">
+            Email
+          </label>
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+
+        </div>
+
+        {/* Password */}
+
+        <div>
+
+          <label className="block text-gray-700 mb-2 font-medium">
+            Password
+          </label>
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+
+        </div>
+
+        {/* Button */}
+
+        <button
+          type="submit"
+          className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded-xl font-semibold transition duration-300"
+        >
+          Login
+        </button>
+
+        {/* Register */}
+
+        <p className="text-center text-gray-600 text-sm sm:text-base">
+
+          Create new account?{" "}
 
           <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+            type="button"
+            onClick={() => navigate("/register")}
+            className="text-indigo-600 font-semibold hover:underline"
           >
-            Login
+            Register
           </button>
 
-          <div>
+        </p>
 
-            {/* Register switch */}
-            <p className="text-center text-gray-600">
-              Create new account {" "}
-              <button
-                onClick={() => navigate("/register")}
-                className="text-purple-600 font-semibold hover:underline"
-              >
-                Register
-              </button>
-            </p>
-          </div>
-
-        </form>
-      </div>
+      </form>
 
     </div>
+
+  </div>
   );
 };
 
