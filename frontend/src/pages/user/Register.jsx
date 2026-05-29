@@ -70,7 +70,7 @@ const Register = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-400 px-4">
+    <div className="flex items-center justify-center min-h-screen bg-linear-to-br from-indigo-100 via-purple-200 to-pink-100 px-4">
       
       <div className="w-full max-w-md bg-white/90 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/30">
         
@@ -111,6 +111,7 @@ const Register = () => {
             <input
               type="text"
               name="phone"
+              required="true"
               placeholder="Phone no"
               value={formData.phone}
               onChange={handleChange}
@@ -150,7 +151,7 @@ const Register = () => {
           {/* Button */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:scale-[1.02] transition duration-300"
+            className="w-full bg-linear-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:scale-[1.02] transition duration-300"
           >
             Register
           </button>
@@ -158,9 +159,9 @@ const Register = () => {
 
         {/* Divider */}
         <div className="flex items-center my-6">
-          <div className="flex-grow h-px bg-gray-300"></div>
+          <div className="grow h-px bg-gray-300"></div>
           <span className="px-3 text-gray-400 text-sm">OR</span>
-          <div className="flex-grow h-px bg-gray-300"></div>
+          <div className="grow h-px bg-gray-300"></div>
         </div>
 
         {/* Login switch */}

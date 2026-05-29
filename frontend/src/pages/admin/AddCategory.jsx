@@ -46,6 +46,31 @@ const AddCategory = () => {
 
     }, []);
 
+    const deleteCategory = async (id) => {
+
+        try {
+
+            const res = await fetch(
+                `http://localhost:8080/api/categories/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+            const data = await res.json();
+
+            toast.success("Category Deleted");
+
+            fetchCategories();
+
+        } catch (error) {
+
+            console.log(error);
+
+            toast.error("Delete Failed");
+        }
+    };
+
 
     const handleSubmit = async (e) => {
 
@@ -148,12 +173,23 @@ const AddCategory = () => {
 
                                 <div
                                     key={cat._id}
-                                    className='border p-4 rounded-xl shadow-sm bg-gray-50'
+                                    className='bg-white border rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300'
                                 >
 
-                                    <h3 className='text-xl font-semibold'>
-                                        {cat.name}
-                                    </h3>
+                                    <div className='flex items-center justify-between'>
+
+                                        <h3 className='text-lg font-bold text-gray-800'>
+                                            {cat.name}
+                                        </h3>
+
+                                        <button
+                                            onClick={() => deleteCategory(cat._id)}
+                                            className='bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm'
+                                        >
+                                            Delete
+                                        </button>
+
+                                    </div>
 
                                 </div>
 

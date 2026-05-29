@@ -104,7 +104,7 @@ const privateRoutes = [
 const App = () => {
   return (
     <div>
-       <ToastContainer position="bottom-right" autoClose={2000} draggable={true}  />
+       <ToastContainer position="top-right" autoClose={2000} draggable={true}  />
       <BrowserRouter>
         <Routes>
           <Route element={<MainLayout />}>
