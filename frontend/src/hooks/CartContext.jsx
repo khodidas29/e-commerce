@@ -113,10 +113,14 @@ const CartProvider = ({ children }) => {
 
     // ================= CLEAR CART =================
 
-    const clearCart = () => {
+   const clearCart = () => {
 
-        setCart([]);
-    };
+    setCart([]);
+
+    localStorage.removeItem(
+        `cart_${userId}`
+    );
+};
 
     return (
 

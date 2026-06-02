@@ -61,6 +61,8 @@ export const createOrder = async (req, res) => {
         });
 
         const saved = await order.save();
+        console.log("ORDER SAVED:", saved);
+        console.log("ORDER ID:", saved._id);
 
         await Products.findByIdAndUpdate(
             req.body.productId,
@@ -87,11 +89,12 @@ export const createOrder = async (req, res) => {
         });
 
     } catch (error) {
+    console.error("CREATE ORDER ERROR:", error);
 
-        res.status(500).json({
-            error: error.message
-        });
-    }
+    res.status(500).json({
+        error: error.message
+    });
+}
 };
 
 export const getOrder = async (req, res) => {

@@ -141,7 +141,7 @@ const OrderHistory = () => {
                                 <div className="lg:border-l-2 lg:pl-6 w-full lg:w-70">
 
                                     <h2 className="text-2xl font-bold mb-4">
-                                        Bill
+                                       Purchase Bill 
                                     </h2>
 
                                     <div className="space-y-2 text-sm sm:text-base">

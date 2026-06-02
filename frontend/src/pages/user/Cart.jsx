@@ -73,7 +73,8 @@ const Cart = () => {
               userId: localStorage.getItem("userId"),
               username: localStorage.getItem("username"),
 
-              productId: item._id,
+              //productId: item._id,
+                productId: item.productId || item._id,
 
               name: item.name,
               image: item.image,
@@ -83,6 +84,7 @@ const Cart = () => {
 
               address: localStorage.getItem("address")
             })
+            
           }
         );
 

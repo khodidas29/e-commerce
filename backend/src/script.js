@@ -4,6 +4,7 @@ import { connectDB } from "./config/connectDB.js";
 import { route } from "./routes/main.route.js";
 import categoryRoute from "./routes/category.routes.js";
 import cartRoute from "./routes/cart.routes.js";
+import orderRoute from "./routes/order.route.js";
 
 connectDB();
 
@@ -19,6 +20,7 @@ const PORT = 8080;
 app.use("/api",route)
 app.use("/api/categories", categoryRoute);
 app.use("/api/cart",cartRoute)
+app.use("/api/orders", orderRoute);
 app.use("/uploads", express.static("uploads"));
 
 app.listen(PORT, ()=>{
