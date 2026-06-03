@@ -46,6 +46,37 @@ import { Products } from "../models/product.model.js";
 //         });
 //     }
 // };
+
+// export const createOrder = async (req, res) => {
+//   try {
+//     console.log("ORDER BODY:", req.body);
+
+//     const totalPrice =
+//       req.body.price * req.body.quantity;
+
+//     const order = new Orders({
+//       ...req.body,
+//       totalPrice
+//     });
+
+//     const saved = await order.save();
+
+//     console.log("ORDER SAVED:", saved);
+
+//     res.status(201).json({
+//       success: true,
+//       saved
+//     });
+
+//   } catch (error) {
+
+//     console.log("ORDER ERROR:", error);
+
+//     res.status(500).json({
+//       error: error.message
+//     });
+//   }
+// };
 export const createOrder = async (req, res) => {
 
     try {
@@ -121,7 +152,7 @@ export const updateOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
         const data = req.body;
-        //await Orders.findByIdAndUpdate(orderId, data)
+        await Orders.findByIdAndUpdate(orderId, data)
         await Orders.findByIdAndUpdate(
             orderId,
             data,

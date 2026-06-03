@@ -137,7 +137,7 @@ const Orders = () => {
                                             Delivery Address
                                         </p>
 
-                                        <p className="font-medium text-gray-700 break-words">
+                                        <p className="font-medium text-gray-700 wrap-break-words">
                                             {order.address}
                                         </p>
 

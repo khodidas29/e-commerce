@@ -69,6 +69,7 @@ export const getSingleProduct = async (req, res) => {
         const productId = req.params.id;
 
         const product = await Products.findById(productId);
+        console.log(product)
 
         res.status(200).json({
             success: true,
