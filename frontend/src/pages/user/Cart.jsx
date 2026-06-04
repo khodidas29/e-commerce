@@ -58,7 +58,18 @@ const Cart = () => {
 
       for (const item of cart) {
 
-        console.log(localStorage.getItem("address"));
+       console.log("ITEM:", item);
+
+  console.log({
+    userId: localStorage.getItem("userId"),
+    username: localStorage.getItem("username"),
+    productId: item.productId || item._id,
+    name: item.name,
+    image: item.image,
+    price: item.price,
+    quantity: item.quantity,
+    address: localStorage.getItem("address")
+  });
 
         const res = await fetch(
           "http://localhost:8080/api/orders/addOrder",

@@ -79,53 +79,52 @@ import { Products } from "../models/product.model.js";
 // };
 export const createOrder = async (req, res) => {
 
-    try {
+  try {
 
-        console.log(req.body);
+    console.log("BODY:", req.body);
 
-        const totalPrice =
-            req.body.price * req.body.quantity;
+    const totalPrice =
+      req.body.price * req.body.quantity;
 
-        const order = new Orders({
-            ...req.body,
-            totalPrice
-        });
+    const order = new Orders({
+      ...req.body,
+      totalPrice
+    });
 
-        const saved = await order.save();
-        console.log("ORDER SAVED:", saved);
-        console.log("ORDER ID:", saved._id);
+    const saved = await order.save();
 
-        await Products.findByIdAndUpdate(
-            req.body.productId,
-            {
-                $inc: {
-                    stock: -req.body.quantity
-                }
-            }
-        );
+    console.log("ORDER SAVED:", saved);
 
-        res.status(201).json({
-            success: true,
-            message: "Order added",
+    console.log(
+      "PRODUCT ID:",
+      req.body.productId
+    );
 
-            bill: {
-                productName: req.body.name,
-                quantity: req.body.quantity,
-                price: req.body.price,
-                totalPrice: totalPrice,
-                address: req.body.address
-            },
+    await Products.findByIdAndUpdate(
+      req.body.productId,
+      {
+        $inc: {
+          stock: -req.body.quantity
+        }
+      }
+    );
 
-            saved
-        });
+    res.status(201).json({
+      success: true,
+      saved
+    });
 
-    } catch (error) {
-    console.error("CREATE ORDER ERROR:", error);
+  } catch (error) {
+
+    console.error(
+      "CREATE ORDER ERROR:",
+      error
+    );
 
     res.status(500).json({
-        error: error.message
+      error: error.message
     });
-}
+  }
 };
 
 export const getOrder = async (req, res) => {

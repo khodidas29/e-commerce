@@ -3,27 +3,42 @@ import { Cart } from "../models/cart.model.js";
 
 // Add To Cart
 export const addToCart = async (req, res) => {
+  try {
 
-    try {
+    const { userId, productId } = req.body;
 
-        console.log("BODY:", req.body);
+    const existingCartItem = await Cart.findOne({
+      userId,
+      productId
+    });
 
-        const cart = new Cart(req.body);
+    if (existingCartItem) {
 
-        const saved = await cart.save();
+      existingCartItem.quantity += 1;
 
-        console.log("SAVED:", saved);
+      await existingCartItem.save();
 
-        res.status(201).json(saved);
-
-    } catch (error) {
-
-        console.log(error);
-
-        res.status(500).json({
-            error: error.message
-        });
+      return res.status(200).json({
+        success: true,
+        cart: existingCartItem
+      });
     }
+
+    const cart = new Cart(req.body);
+
+    const saved = await cart.save();
+
+    res.status(201).json({
+      success: true,
+      cart: saved
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      error: error.message
+    });
+  }
 };
 
 
