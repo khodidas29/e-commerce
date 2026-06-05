@@ -5,10 +5,10 @@ import { toast } from 'react-toastify';
 
 const UpdateProduct = () => {
 
-const { id } = useParams();
+    const { id } = useParams();
 
     const navigate = useNavigate();
-
+    const [categories, setCategories] = useState([]);
     const [formData, setFormData] = useState({
         name: "",
         image: "",
@@ -36,8 +36,25 @@ const { id } = useParams();
         }
     };
 
+
+    const fetchCategories = async () => {
+        try {
+            const res = await fetch(
+                "http://localhost:8080/api/categories"
+            );
+
+            const data = await res.json();
+
+            setCategories(data.categories);
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         fetchSingleProduct();
+        fetchCategories();
     }, []);
 
     const handleChange = (e) => {
@@ -121,14 +138,25 @@ const { id } = useParams();
                         className="w-full border p-4 rounded-xl outline-none"
                     />
 
-                    <input
-                        type="text"
+                    <select
                         name="category"
-                        placeholder="Category"
                         value={formData.category}
                         onChange={handleChange}
                         className="w-full border p-4 rounded-xl outline-none"
-                    />
+                    >
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        {categories?.map((category) => (
+                            <option
+                                key={category._id}
+                                value={category.name}
+                            >
+                                {category.name}
+                            </option>
+                        ))}
+                    </select>
 
                     <input
                         type="number"

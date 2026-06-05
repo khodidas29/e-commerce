@@ -81,8 +81,7 @@ export const createOrder = async (req, res) => {
 
   try {
 
-    console.log("BODY:", req.body);
-
+ console.log("ORDER BODY:", req.body);
     const totalPrice =
       req.body.price * req.body.quantity;
 
@@ -91,7 +90,7 @@ export const createOrder = async (req, res) => {
       totalPrice
     });
 
-    const saved = await order.save();
+    const saved = await order.save();   
 
     console.log("ORDER SAVED:", saved);
 

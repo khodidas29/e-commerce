@@ -3,42 +3,42 @@ import { Cart } from "../models/cart.model.js";
 
 // Add To Cart
 export const addToCart = async (req, res) => {
-  try {
+    try {
+        console.log("ADD CART BODY:", req.body);
+        const { userId, productId } = req.body;
 
-    const { userId, productId } = req.body;
+        const existingCartItem = await Cart.findOne({
+            userId,
+            productId
+        });
 
-    const existingCartItem = await Cart.findOne({
-      userId,
-      productId
-    });
+        if (existingCartItem) {
 
-    if (existingCartItem) {
+            existingCartItem.quantity += 1;
 
-      existingCartItem.quantity += 1;
+            await existingCartItem.save();
 
-      await existingCartItem.save();
+            return res.status(200).json({
+                success: true,
+                cart: existingCartItem
+            });
+        }
 
-      return res.status(200).json({
-        success: true,
-        cart: existingCartItem
-      });
+        const cart = new Cart(req.body);
+
+        const saved = await cart.save();
+
+        res.status(201).json({
+            success: true,
+            cart: saved
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: error.message
+        });
     }
-
-    const cart = new Cart(req.body);
-
-    const saved = await cart.save();
-
-    res.status(201).json({
-      success: true,
-      cart: saved
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      error: error.message
-    });
-  }
 };
 
 
@@ -157,23 +157,23 @@ export const removeCartProduct = async (req, res) => {
 
 // Clear Cart
 export const clearCart = async (req, res) => {
-  try {
-    const { userId } = req.params;
+    try {
+        const { userId } = req.params;
 
-    await Cart.deleteMany({ userId });
+        await Cart.deleteMany({ userId });
 
-    res.status(200).json({
-      success: true,
-      message: "Cart cleared successfully"
-    });
+        res.status(200).json({
+            success: true,
+            message: "Cart cleared successfully"
+        });
 
-  } catch (error) {
+    } catch (error) {
 
-    res.status(500).json({
-      error: error.message
-    });
+        res.status(500).json({
+            error: error.message
+        });
 
-  }
+    }
 };
 
 export const getCartItems = async (req, res) => {

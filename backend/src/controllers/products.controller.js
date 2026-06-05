@@ -55,10 +55,10 @@ export const updateProduct = async(req,res) =>{
     try {
         const productId = req.params.productId;
         const data = req.body;
-        await Products.findByIdAndUpdate(productId,data);
+        await Products.findByIdAndUpdate(productId,data);       
         res.status(201).json({message:"Product updated"})
     } catch (error) {
-        res.status(500).json({error:error.message || "Internal server error"})
+        res.status(500).json({error:error.message || "Internal server error"}) 
     }
 }
 
