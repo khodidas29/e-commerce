@@ -8,7 +8,7 @@ const About = () => {
 
             {/* HERO SECTION */}
 
-            <div className="bg-gradient-to-r from-green-400 to-purple-500 text-white py-20 px-6 mt-20">
+            <div className="bg-linear-to-r from-green-400 to-purple-500 text-white py-20 px-6 mt-20">
 
                 <div className="max-w-7xl mx-auto text-center">
 
@@ -163,7 +163,7 @@ const About = () => {
 
             {/* STATS */}
 
-            <div className="bg-gradient-to-r from-indigo-600 to-blue-600 py-20 px-6 text-white">
+            <div className="bg-linear-to-r from-indigo-600 to-blue-600 py-20 px-6 text-white">
 
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
 
